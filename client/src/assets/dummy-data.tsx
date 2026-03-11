@@ -3,18 +3,18 @@ import { UploadIcon, VideoIcon, ZapIcon } from 'lucide-react';
 export const featuresData = [
     {
         icon: <UploadIcon className="w-6 h-6" />,
-        title: 'Discovery & Planning',
-        desc: 'We understand your goals, audience and challenges to craft a clear, actionable strategy.'
+        title: 'Smart Upload',
+        desc: 'Drag & drop your assets . We auto-optimize formats and sizes'
     },
     {
         icon: <ZapIcon className="w-6 h-6" />,
-        title: 'Design & Development',
-        desc: 'High-quality design and scalable development focused on performance and usability.'
+        title: 'Instant Generation',
+        desc: 'Optimized models deliver output in seconds with great fidelity'
     },
     {
         icon: <VideoIcon className="w-6 h-6" />,
-        title: 'Launch & Growth',
-        desc: 'We launch, optimize and continuously improve to drive measurable business growth.'
+        title: 'Video synthesis',
+        desc: 'Bring product shots to life with short-form, social-ready videos'
     }
 ];
 
@@ -22,43 +22,43 @@ export const plansData = [
     {
         id: 'starter',
         name: 'Starter',
-        price: '$499',
-        desc: 'Best for early-stage startups.',
-        credits: 'One-time',
+        price: '$10',
+        desc: 'Try the platform at no cost.',
+        credits: 25,
         features: [
-            'Project discovery & planning',
-            'UI/UX design',
-            'Basic website development',
-            '1 revision round',
+            '25 Credits',
+            'Standard quality',
+            'No watermark',
+            'Slower generation speed',
             'Email support'
         ]
     },
     {
         id: 'pro',
-        name: 'Growth',
-        price: '$1,499',
-        desc: 'Growing teams and businesses.',
-        credits: 'Monthly',
+        name: 'Pro',
+        price: '$29',
+        desc: 'Creators & small teams',
+        credits: 80,
         features: [
-            'Everything in Starter',
-            'Advanced UI/UX design',
-            'Custom development',
-            'Performance optimization',
+            '80 Credits',
+            'HD quality',
+            'No watermark',
+            'Video generation',
             'Priority support'
         ],
         popular: true
     },
     {
         id: 'ultra',
-        name: 'Scale',
-        price: '$3,999',
-        desc: 'For brands ready to scale fast.',
-        credits: 'Custom',
+        name: 'Ultra',
+        price: '$99',
+        desc: 'Scale across teams and agencies',
+        credits: 300,
         features: [
-            'Everything in Growth',
-            'Dedicated project manager',
-            'Ongoing optimization',
-            'Marketing & growth support',
+            '300 Credits',
+            'FHD quality',
+            'No watermark',
+            'Fast generation speed',
             'Chat + Email support'
         ]
     }
@@ -66,31 +66,31 @@ export const plansData = [
 
 export const faqData = [
     {
-        question: 'What services does your agency provide?',
-        answer: 'We offer end-to-end digital services including brand strategy, UI/UX design, web and app development and growth-focused marketing solutions.'
+        question: 'How does the Ai generation work?',
+        answer: 'We leverage state-of-art diffusion models trained on millions of product images to blend your product into realistic scenes while preserving details, lighting and reflections'
     },
     {
-        question: 'Do you work with startups or only large companies?',
-        answer: 'We work with startups, growing businesses and established brands. Our process is flexible and tailored to match your goals and scale.'
+        question: 'Can I cancel anytime?',
+        answer: 'Yes - you can cancel from your dashboard. You will retain access through the end of your billing period'
     },
     {
-        question: 'How long does a typical project take?',
-        answer: 'Project timelines vary by scope, but most projects take between 2–6 weeks. We provide a clear timeline after the discovery phase.'
+        question: 'Do I won the generated images?',
+        answer: 'Yes - you receive full comercial rights to any images and videos generated on the platforms. Use them for ads, ecommerce, Social media and more.'
     },
     {
-        question: 'Do you offer ongoing support after launch?',
-        answer: 'Yes. We offer maintenance, optimization and growth support packages to ensure your product continues to perform and evolve.'
+        question: 'What input formats do you support?',
+        answer: 'We accept JPG, PNG and WEBP. Outputs are high-resolution PNGs and MP4s optimized for social platforms'
     }
 ];
 
 export const footerLinks = [
     {
-        title: "Company",
+        title: "Quick links",
         links: [
             { name: "Home", url: "#" },
-            { name: "Services", url: "#" },
-            { name: "Work", url: "#" },
-            { name: "Contact", url: "#" }
+            { name: "Features", url: "#" },
+            { name: "Pricing", url: "#" },
+            { name: "FAQ", url: "#" }
         ]
     },
     {
