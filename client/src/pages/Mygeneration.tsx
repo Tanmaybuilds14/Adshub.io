@@ -3,6 +3,7 @@ import type {Project} from "../types"
 import { Loader2Icon } from "lucide-react";
 import ProjectCard from "../components/ProjectCard";
 import { PrimaryButton } from "../components/Buttons";
+import { dummyGenerations } from "../assets/assets";
 
 const Mygeneration = () => {
    const [generations , setGenerations] = useState<Project[]>([]);
@@ -10,7 +11,7 @@ const Mygeneration = () => {
     
    const fetchMyGenerations = async ()=>{
     setTimeout(()=>{
-     setGenerations([]);
+     setGenerations(dummyGenerations);
      setLoading(false);
     },3000)
    }
