@@ -19,7 +19,7 @@ const Result = () => {
   }
   
   const HandleGenerateVideo = async()=>{
-
+   setIsGenerating(true);
   }
 
   useEffect(()=>{
