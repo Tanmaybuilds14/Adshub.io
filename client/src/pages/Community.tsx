@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import type { Project } from "../types"
 import { dummyGenerations } from "../assets/assets";
 import { Loader2Icon } from "lucide-react";
-import ProjectCard from "../components/projectcard";
+import ProjectCard from "../components/ProjectCard";
 
 
 const Community = () => {
