@@ -5,6 +5,7 @@ import 'dotenv/config';
 import { clerkMiddleware } from '@clerk/express'
 import clerkwebhooks from './controllers/clerk.js';
 import * as Sentry from '@sentry/node';
+import userRouter from "./routes/userRoutes.js";
 
 
 const app = express();
@@ -22,7 +23,9 @@ app.get('/',(req,res)=>{
 
 app.get('/debug-sentry', function mainHandler(req,res){
   throw new Error("My first sentry error!");
-})
+});
+
+app.use('api/user',userRouter);
 
 Sentry.setupExpressErrorHandler(app);
 
