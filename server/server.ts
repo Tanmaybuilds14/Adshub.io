@@ -6,6 +6,7 @@ import { clerkMiddleware } from '@clerk/express'
 import clerkwebhooks from './controllers/clerk.js';
 import * as Sentry from '@sentry/node';
 import userRouter from "./routes/userRoutes.js";
+import ProjectRouter from "./routes/ProjectControllerRoutes.js";
 
 
 const app = express();
@@ -25,7 +26,8 @@ app.get('/debug-sentry', function mainHandler(req,res){
   throw new Error("My first sentry error!");
 });
 
-app.use('api/user',userRouter);
+app.use('/api/user',userRouter);
+app.use('/api/project',ProjectRouter);
 
 Sentry.setupExpressErrorHandler(app);
 
