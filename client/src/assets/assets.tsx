@@ -14,6 +14,7 @@ import generated3 from './generated3.png'; // men with shoes
 import generated4 from './generated4.png'; // women with shoes
 import generatedVideo1 from './generatedVideo1.mp4'; // random product men 9:16
 import generatedVideo2 from './generatedVideo2.mp4'; // random product women 16:9
+import avengersicon from './avengersicon.svg';
 
 export const assets = {
     logo,
@@ -32,6 +33,7 @@ export const assets = {
     generated4,
     generatedVideo1,
     generatedVideo2,
+    avengersicon
 };
 
 export const dummyGenerations = [

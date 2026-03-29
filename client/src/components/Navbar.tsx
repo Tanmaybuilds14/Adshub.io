@@ -1,16 +1,21 @@
+import React, { useEffect, useState } from 'react';
 import { DollarSignIcon, FolderEditIcon, GalleryHorizontalEnd, MenuIcon, SparkleIcon, XIcon } from 'lucide-react';
 import { GhostButton, PrimaryButton } from './Buttons';
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
-import { useClerk, useUser, UserButton} from '@clerk/clerk-react';
+import { useClerk, useUser, UserButton, useAuth} from '@clerk/clerk-react';
+import api from '../configs/axios';
+import toast from 'react-hot-toast';
 
 export default function Navbar() {
     const navigate = useNavigate();
     const {user} = useUser();
     const {openSignIn,openSignUp} = useClerk();
     const [isOpen, setIsOpen] = useState(false);
+    const [credits,setCredits] = useState(20);
+    const {pathname} = useLocation();
+    const {getToken}  = useAuth();
 
     const navLinks = [
         { name: 'Home', href: '/#' },
@@ -18,6 +23,39 @@ export default function Navbar() {
         { name: 'Community', href: '/Community' },
         { name: 'Plans', href: '/Plans' },
     ];
+    
+
+    const getUserCredits = async () =>{
+     try {
+        const token = await getToken()
+        console.log('Fetching credits with token:', token?.substring(0, 20) + '...');
+        const {data} = await api.get('/api/user/credits',{headers:{Authorization:`Bearer ${token}`}})
+        console.log('Credits response:', data);
+        setCredits(data.credits || 0)
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     } catch (error:any){
+        console.log('Error details:', error?.response?.data, error?.message);
+        toast.error(error?.response?.data?.message || error.message)
+     }
+    }
+
+    // Fetch credits when component mounts and user changes
+    useEffect(()=>{
+        if(user){
+            getUserCredits();
+        }
+    },[user])
+
+    // Refresh credits every 30 seconds when user is logged in
+    useEffect(()=>{
+        if(!user) return;
+        
+        const interval = setInterval(()=>{
+            getUserCredits();
+        }, 30000);
+
+        return ()=> clearInterval(interval);
+    },[user])
 
     return (
         <motion.nav className='fixed top-5 left-0 right-0 z-50 px-4'
@@ -28,7 +66,7 @@ export default function Navbar() {
             >
             <div className='max-w-6xl mx-auto flex items-center justify-between bg-black/50 backdrop-blur-md border border-white/4 rounded-2xl p-3'>
                 <Link to='/' onClick={()=>scrollTo(0,0)}>
-                    <img src={assets.logo} alt="logo" className="h-8" />
+                    <img src={assets.avengersicon} alt="logo" className="h-8" />
                 </Link>
 
                 <div className='hidden md:flex items-center gap-8 text-sm font-medium text-gray-300'>
@@ -48,7 +86,9 @@ export default function Navbar() {
 
                 ) : (
                     <div className='flex gap-2'>
-                      <GhostButton onClick={()=>navigate('/Plans')} className='border-none text-gray-300 sm:py-1.5'></GhostButton>
+                      <GhostButton onClick={()=>navigate('/Plans')} className='border-none text-gray-300 sm:py-1.5'>
+                        Credits:{credits}
+                      </GhostButton>
                       <UserButton>
                         <UserButton.MenuItems>
                             <UserButton.Action label='Generate' labelIcon={<SparkleIcon size={14}/>} onClick={()=>navigate('/generate')}/>

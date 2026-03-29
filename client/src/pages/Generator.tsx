@@ -3,10 +3,17 @@ import Title from "../components/Title"
 import Uploadzone from "../components/Uploadzone"
 import { Loader2Icon, RectangleHorizontalIcon, RectangleVerticalIcon, Wand2Icon } from "lucide-react";
 import { PrimaryButton } from "../components/Buttons";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import api from "../configs/axios";
 
 const Generator = () => {
+  const {user} = useUser();
+  const {getToken} = useAuth();
+  const navigate = useNavigate();
   const [name ,setName] = useState('');
-  const [produstName , setProductName] = useState('');
+  const [productName , setProductName] = useState('');
   const [productDescription ,setProductDescription] = useState('');
   const [aspectRatio ,setAspectRatio] = useState('9:16');
   const [productImage ,setProductImage] = useState<File|null>(null);
@@ -23,6 +30,30 @@ const Generator = () => {
 
   const handleGenerate = async (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    if(!user) return toast('Please login to generate')
+      if(!productImage || !modelImage|| !name || !productName || !aspectRatio) return toast('Please fill all the required fields')
+        try {
+          setIsGenerating(true);
+          const formdata = new FormData();
+          formdata.append('name',name);
+          formdata.append('productName',productName);
+          formdata.append('productDescription',productDescription);
+          formdata.append('userPrompt',userPrompt);
+          formdata.append('aspectRatio',aspectRatio);
+          formdata.append('images',productImage);
+          formdata.append('images',modelImage);
+
+          const token = await getToken()
+          const {data} = await api.post('api/project/create',formdata,{
+            headers:{Authorization:`Bearer${token}`}
+          })
+          toast.success(data.message)
+          navigate('/result/'+data.projectId)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error:any) {
+          setIsGenerating(false);
+          toast.error(error?.response?.data?.message || error.message)
+        }
   }
 
 
@@ -45,7 +76,7 @@ const Generator = () => {
               </div>
               <div className="mb-4 text-gray-300">
                 <label htmlFor="roductname" className="block text-sm mb-4" >Product Name</label>
-                <input type="text" id="productname" value={produstName} onChange={(e)=>setProductName(e.target.value)} placeholder="Name the name of your product"  required className="w-full bg-white/3 rouded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
+                <input type="text" id="productname" value={productName} onChange={(e)=>setProductName(e.target.value)} placeholder="Name the name of your product"  required className="w-full bg-white/3 rouded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
               </div>
               <div className="mb-4 text-gray-300">
                 <label htmlFor="productDescription" className="block text-sm mb-4" >Product Description 
