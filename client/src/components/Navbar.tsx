@@ -66,7 +66,7 @@ export default function Navbar() {
             >
             <div className='max-w-6xl mx-auto flex items-center justify-between bg-black/50 backdrop-blur-md border border-white/4 rounded-2xl p-3'>
                 <Link to='/' onClick={()=>scrollTo(0,0)}>
-                    <img src={assets.avengersicon} alt="logo" className="h-8" />
+                    <img src={assets.avengersicon} alt="logo" className="h-8" />AdsHub
                 </Link>
 
                 <div className='hidden md:flex items-center gap-8 text-sm font-medium text-gray-300'>
