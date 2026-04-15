@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import * as Sentry from  '@sentry/node';
-import { prisma } from "../configs/prisma.js";
-import {v2 as cloudinary} from 'cloudinary'
+import prismaConfig from "../configs/prisma.js";
+const { prisma } = prismaConfig;
+import {v2 as cloudinary} from 'cloudinary';
 import { GenerateContentConfig , HarmBlockThreshold , HarmCategory} from "@google/genai";
 import fs from 'fs';
 import ai from "../configs/ai.js";
