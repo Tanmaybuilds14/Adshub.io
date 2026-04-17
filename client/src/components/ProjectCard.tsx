@@ -8,7 +8,7 @@ import { useAuth } from "@clerk/clerk-react";
 import api from "../configs/axios";
 import toast from "react-hot-toast";
 
-const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project , setGenerations:React.Dispatch<React.SetStateAction<Project[]>>, forCommunity?:boolean}) => {
+const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project , setGeneration:React.Dispatch<React.SetStateAction<Project[]>>, forCommunity?:boolean}) => {
 
   const {getToken} = useAuth();
 
@@ -20,13 +20,14 @@ const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project ,
     if(!confirm)return;
     try {
       const token = await getToken();
-      const {data} = await api.delete(`/api/project/${id}`{
+      const {data} = await api.delete(`/api/project/${id}`,{
         headers:{Authorization:`Bearer ${token}`}
       })
       setGeneration((generations)=>generations.filter((gen)=>gen.id!==id))
       toast.success(data.message)
-    } catch (error:any) {
-      toast.error(error?.response?.data?.message || error.message);
+    } catch (error) {
+      const axiosError = error as import("axios").AxiosError<{message: string}>;
+      toast.error(axiosError?.response?.data?.message || (error as Error).message);
       console.log(error)
     }
   }
@@ -34,13 +35,14 @@ const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project ,
   const Togglepublish = async (projectid:string)=>{
     try {
       const token = await getToken();
-      const {data} = await api.get(`/api/user/publish/${id}`{
+      const {data} = await api.get(`/api/user/publish/${projectid}`,{
         headers:{Authorization:`Bearer ${token}`}
       })
-      setGeneration((generations)=>generations.map((gen)=>gen.id===projectid?{...gen, data.isPublished}:gen));
+      setGeneration((generations)=>generations.map((gen)=>gen.id===projectid?{...gen, isPublished: data.isPublished}:gen));
       toast.success(data.isPublished?'project published':'project unpublished');
-    } catch (error:any) {
-      toast.error(error?.response?.data?.message || error.message);
+    } catch (error) {
+      const axiosError = error as import("axios").AxiosError<{message: string}>;
+      toast.error(axiosError?.response?.data?.message || (error as Error).message);
       console.log(error)
     }
   }
