@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react";
 import { EllipsisIcon, ImageIcon, Loader2Icon, PlaySquareIcon, Share2Icon, Trash2Icon } from "lucide-react";
 import { GhostButton, PrimaryButton } from "./Buttons";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth } from "@clerk/react";
 import api from "../configs/axios";
 import toast from "react-hot-toast";
 

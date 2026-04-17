@@ -5,7 +5,7 @@ import api from "../configs/axios"
 import toast from "react-hot-toast"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { GhostButton, PrimaryButton } from "../components/Buttons"
-import { useAuth, useUser } from "@clerk/clerk-react"
+import { useAuth, useUser } from "@clerk/react"
 
 
 const Result = () => {
@@ -66,9 +66,10 @@ const Result = () => {
     if(user && isGenerating){
       const interval = setInterval(()=>{
         fetchProjectData();
-      })
+      }, 5000)
+      return () => clearInterval(interval);
     }
-  })
+  }, [user, isGenerating])
   return Loading?(
     <div className="h-screen w-full flex items-center justify-center">
       <Loader2Icon className="animate-spin text-indigo-size-9"/>

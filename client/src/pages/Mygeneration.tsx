@@ -3,7 +3,7 @@ import type {Project} from "../types"
 import { Loader2Icon } from "lucide-react";
 import ProjectCard from "../components/ProjectCard";
 import { PrimaryButton } from "../components/Buttons";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../configs/axios";
@@ -52,7 +52,7 @@ const Mygeneration = () => {
          {/* generations list */}
          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
            {generations.map((gen)=>(
-             <ProjectCard key={gen.id} gen={gen} setGenerations={setGenerations}/>
+             <ProjectCard key={gen.id} gen={gen} setGeneration={setGenerations}/>
            ))}
          </div>
          {generations.length===0 && (

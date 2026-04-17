@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DollarSignIcon, FolderEditIcon, GalleryHorizontalEnd, MenuIcon, SparkleIcon, XIcon } from 'lucide-react';
 import { GhostButton, PrimaryButton } from './Buttons';
 import { motion } from 'framer-motion';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
-import { useClerk, useUser, UserButton, useAuth} from '@clerk/clerk-react';
+import { useClerk, useUser, UserButton, useAuth} from '@clerk/react';
 import api from '../configs/axios';
 import toast from 'react-hot-toast';
 
@@ -14,7 +14,6 @@ export default function Navbar() {
     const {openSignIn,openSignUp} = useClerk();
     const [isOpen, setIsOpen] = useState(false);
     const [credits,setCredits] = useState(20);
-    const {pathname} = useLocation();
     const {getToken}  = useAuth();
 
     const navLinks = [

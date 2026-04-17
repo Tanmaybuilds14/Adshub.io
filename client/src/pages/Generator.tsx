@@ -3,7 +3,7 @@ import Title from "../components/Title"
 import Uploadzone from "../components/Uploadzone"
 import { Loader2Icon, RectangleHorizontalIcon, RectangleVerticalIcon, Wand2Icon } from "lucide-react";
 import { PrimaryButton } from "../components/Buttons";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../configs/axios";
@@ -28,7 +28,7 @@ const Generator = () => {
     }
   }
 
-  const handleGenerate = async (e:React.FormEvent<HTMLFormElement>)=>{
+  const handleCreateVideo = async (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
     if(!user) return toast('Please login to generate')
       if(!productImage || !modelImage|| !name || !productName || !aspectRatio) return toast('Please fill all the required fields')
@@ -59,7 +59,7 @@ const Generator = () => {
 
   return (
     <div className="min-h-screen text-white p-6 md:p-12 mt-28">
-      <form className="max-w-4xl mx-auto mb-40">
+      <form onSubmit={handleCreateVideo} className="max-w-4xl mx-auto mb-40">
         <Title heading='Create In-context Image' description="Upload your model and product images to generate stunning UGC, short-form videos and social media posts"/>
         <div className="flex gap-20 max-sm:flex-col items-start justify-between">
           {/* left col */}
