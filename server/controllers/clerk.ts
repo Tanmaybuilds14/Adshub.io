@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { verifyWebhook } from '@clerk/express';
+import { verifyWebhook } from '@clerk/express/webhooks';
 import prismaConfig from "../configs/prisma.js";
 const { prisma } = prismaConfig;
 

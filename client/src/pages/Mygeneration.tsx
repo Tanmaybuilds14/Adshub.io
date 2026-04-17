@@ -30,7 +30,7 @@ const Mygeneration = () => {
     }
    }
 
-   useEffect(()=>{
+   useEffect( ()=>{
     if(user){
       fetchMyGenerations()
     }else if(isLoaded && !user){
