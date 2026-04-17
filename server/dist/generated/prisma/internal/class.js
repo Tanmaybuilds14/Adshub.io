@@ -12,8 +12,8 @@
 import * as runtime from "@prisma/client/runtime/client";
 const config = {
     "previewFeatures": [],
-    "clientVersion": "7.5.0",
-    "engineVersion": "280c870be64f457428992c43c1f6d557fab6e29e",
+    "clientVersion": "7.7.0",
+    "engineVersion": "75cbdc1eb7150937890ad5465d861175c6624711",
     "activeProvider": "postgresql",
     "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Get a free hosted Postgres database in seconds: `npx create-db`\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id\n  email     String\n  name      String\n  image     String\n  credits   Int      @default(20)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relations\n  projects Project[]\n}\n\nmodel Project {\n  id                 String   @id @default(uuid())\n  name               String\n  userId             String\n  productName        String\n  productDescription String   @default(\"\")\n  userPrompt         String   @default(\"\")\n  aspectRatio        String   @default(\"9:16\")\n  targetLength       Int      @default(5)\n  uploadedImages     String[]\n  generatedImage     String   @default(\"\")\n  generatedVideo     String   @default(\"\")\n  isGenerating       Boolean  @default(false)\n  isPublished        Boolean  @default(false)\n  error              String   @default(\"\")\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  // Relations\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n",
     "runtimeDataModel": {

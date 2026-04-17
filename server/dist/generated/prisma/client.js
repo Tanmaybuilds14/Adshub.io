@@ -31,5 +31,5 @@ export * from "./enums.js";
  * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass();
-export default { Prisma };
+export { Prisma };
 //# sourceMappingURL=client.js.map
