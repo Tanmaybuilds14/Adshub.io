@@ -1,12 +1,12 @@
-import "./configs/instrument.js";
+import "./configs/instrument";
 import express from 'express'
 import cors from 'cors';
 import 'dotenv/config';
 import { clerkMiddleware } from '@clerk/express'
-import clerkwebhooks from './controllers/clerk.js';
+import clerkwebhooks from './controllers/clerk';
 import * as Sentry from '@sentry/node';
-import userRouter from "./routes/userRoutes.js";
-import ProjectRouter from "./routes/ProjectControllerRoutes.js";
+import userRouter from "./routes/userRoutes";
+import ProjectRouter from "./routes/ProjectControllerRoutes";
 
 const app = express();
 

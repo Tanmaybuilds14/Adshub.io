@@ -32,10 +32,33 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+require("./configs/instrument");
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+require("dotenv/config");
+const express_2 = require("@clerk/express");
+const clerk_1 = __importDefault(require("./controllers/clerk"));
 const Sentry = __importStar(require("@sentry/node"));
-Sentry.init({
-    dsn: "https://1c88f61e7ea53587ea02649376ae7732@o4511065572966400.ingest.us.sentry.io/4511065575653376",
-    sendDefaultPii: true,
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const ProjectControllerRoutes_1 = __importDefault(require("./routes/ProjectControllerRoutes"));
+const app = (0, express_1.default)();
+//Middleware
+app.use((0, cors_1.default)());
+app.post('/api/clerk', express_1.default.raw({ type: 'application/json' }), clerk_1.default);
+app.use(express_1.default.json());
+app.use((0, express_2.clerkMiddleware)());
+app.get('/', (req, res) => {
+    res.send('server is live');
 });
-//# sourceMappingURL=instrument.js.map
+app.get('/debug-sentry', function mainHandler(req, res) {
+    throw new Error("My first sentry error!");
+});
+app.use('/api/user', userRoutes_1.default);
+app.use('/api/project', ProjectControllerRoutes_1.default);
+Sentry.setupExpressErrorHandler(app);
+exports.default = app;
+//# sourceMappingURL=app.js.map

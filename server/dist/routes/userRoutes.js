@@ -1,32 +1,15 @@
-import express from 'express';
-import { getAllProjects, getProjectById, getUserCredits, toggleProjectPublic } from '../controllers/UserControler.js';
-import { protect } from '../middlewares/auth.js';
-import { prisma } from '../configs/prisma.js';
-const userRouter = express.Router();
-userRouter.get('/credits', protect, getUserCredits);
-userRouter.get('/projects', protect, getAllProjects);
-userRouter.get('/projects/:projectId', protect, getProjectById);
-userRouter.get('/publish/:projectId', protect, toggleProjectPublic);
-// Test endpoint to manually add credits (remove in production)
-userRouter.post('/test-add-credits/:amount', protect, async (req, res) => {
-    try {
-        const { userId } = req.auth();
-        const { amount } = req.params;
-        const creditsToAdd = parseInt(amount.toString());
-        console.log(`[Test] Adding ${creditsToAdd} credits to user ${userId}`);
-        const user = await prisma.user.update({
-            where: { id: userId },
-            data: {
-                credits: { increment: creditsToAdd }
-            }
-        });
-        console.log(`[Test] Updated user credits to ${user.credits}`);
-        res.json({ success: true, credits: user.credits, msg: `Added ${creditsToAdd} credits` });
-    }
-    catch (error) {
-        console.error('[Test] Error:', error.message);
-        res.status(500).json({ msg: error.message });
-    }
-});
-export default userRouter;
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const UserControler_1 = require("../controllers/UserControler");
+const auth_1 = require("../middlewares/auth");
+const userRouter = express_1.default.Router();
+userRouter.get('/credits', auth_1.protect, UserControler_1.getUserCredits);
+userRouter.get('/projects', auth_1.protect, UserControler_1.getAllProjects);
+userRouter.get('/projects/:projectId', auth_1.protect, UserControler_1.getProjectById);
+userRouter.get('/publish/:projectId', auth_1.protect, UserControler_1.toggleProjectPublic);
+exports.default = userRouter;
 //# sourceMappingURL=userRoutes.js.map

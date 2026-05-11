@@ -1,13 +1,49 @@
-import * as Sentry from '@sentry/node';
-import { prisma } from "../configs/prisma.js";
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.toggleProjectPublic = exports.getProjectById = exports.getAllProjects = exports.getUserCredits = void 0;
+const Sentry = __importStar(require("@sentry/node"));
+const prisma_1 = require("../configs/prisma");
 //get user credits
-export const getUserCredits = async (req, res) => {
+const getUserCredits = async (req, res) => {
     try {
         const { userId } = req.auth();
         if (!userId) {
             return res.status(401).json({ msg: 'Unauthorized' });
         }
-        const user = await prisma.user.findUnique({
+        const user = await prisma_1.prisma.user.findUnique({
             where: { id: userId }
         });
         res.json({ credits: user?.credits });
@@ -17,11 +53,12 @@ export const getUserCredits = async (req, res) => {
         res.status(500).json({ msg: error.code || error.message });
     }
 };
+exports.getUserCredits = getUserCredits;
 //get all  users project
-export const getAllProjects = async (req, res) => {
+const getAllProjects = async (req, res) => {
     try {
         const { userId } = req.auth();
-        const projects = await prisma.project.findMany({
+        const projects = await prisma_1.prisma.project.findMany({
             where: { userId },
             orderBy: { createdAt: 'desc' }
         });
@@ -32,16 +69,17 @@ export const getAllProjects = async (req, res) => {
         res.status(500).json({ msg: error.code || error.message });
     }
 };
+exports.getAllProjects = getAllProjects;
 //get project by id
-export const getProjectById = async (req, res) => {
+const getProjectById = async (req, res) => {
     try {
         const { userId } = req.auth();
         const { projectId } = req.params;
-        const project = await prisma.project.findUnique({
+        const project = await prisma_1.prisma.project.findUnique({
             where: { id: projectId.toString(), userId }
         });
         if (!project) {
-            return res.status(401).json({ msg: 'Project not found' });
+            return res.status(404).json({ msg: 'Project not found' });
         }
         res.json({ project });
     }
@@ -50,21 +88,22 @@ export const getProjectById = async (req, res) => {
         res.status(500).json({ msg: error.code || error.message });
     }
 };
+exports.getProjectById = getProjectById;
 //publish/unpublish
-export const toggleProjectPublic = async (req, res) => {
+const toggleProjectPublic = async (req, res) => {
     try {
         const { userId } = req.auth();
         const { projectId } = req.params;
-        const project = await prisma.project.findUnique({
+        const project = await prisma_1.prisma.project.findUnique({
             where: { id: projectId.toString(), userId }
         });
         if (!project) {
-            return res.status(401).json({ msg: 'Project not found' });
+            return res.status(404).json({ msg: 'Project not found' });
         }
         if (!project?.generatedImage && !project?.generatedVideo) {
             return res.status(404).json({ msg: 'image or video not generated' });
         }
-        await prisma.project.update({
+        await prisma_1.prisma.project.update({
             where: { id: projectId.toString() },
             data: { isPublished: !project.isPublished }
         });
@@ -75,4 +114,5 @@ export const toggleProjectPublic = async (req, res) => {
         res.status(500).json({ msg: error.code || error.message });
     }
 };
+exports.toggleProjectPublic = toggleProjectPublic;
 //# sourceMappingURL=UserControler.js.map

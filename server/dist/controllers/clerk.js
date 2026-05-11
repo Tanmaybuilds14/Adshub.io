@@ -1,15 +1,16 @@
-import { verifyWebhook } from '@clerk/express/webhooks';
-import prismaConfig from "../configs/prisma.js";
-const { prisma } = prismaConfig;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const webhooks_1 = require("@clerk/express/webhooks");
+const prisma_1 = require("../configs/prisma");
 const clerkwebhooks = async (req, res) => {
     try {
-        const evt = await verifyWebhook(req);
+        const evt = await (0, webhooks_1.verifyWebhook)(req);
         const { data, type } = evt;
         console.log(`[Webhook] Received event type: ${type}`, JSON.stringify(data, null, 2));
         switch (type) {
             case "user.created": {
                 console.log(`[Webhook] Creating user: ${data.id}`);
-                await prisma.user.create({
+                await prisma_1.prisma.user.create({
                     data: {
                         id: data.id,
                         email: data?.email_addresses[0]?.email_address || "no-email",
@@ -22,7 +23,7 @@ const clerkwebhooks = async (req, res) => {
             }
             case "user.updated": {
                 console.log(`[Webhook] Updating user: ${data.id}`);
-                await prisma.user.update({
+                await prisma_1.prisma.user.update({
                     where: {
                         id: data.id
                     },
@@ -37,7 +38,7 @@ const clerkwebhooks = async (req, res) => {
             }
             case "user.deleted": {
                 console.log(`[Webhook] Deleting user: ${data.id}`);
-                await prisma.user.delete({
+                await prisma_1.prisma.user.delete({
                     where: {
                         id: data.id
                     }
@@ -60,7 +61,7 @@ const clerkwebhooks = async (req, res) => {
                         if (planId && (planId === "pro" || planId === "premium")) {
                             const creditAmount = credits[planId];
                             console.log(`[Webhook] Adding ${creditAmount} credits to user ${clerkUserId}`);
-                            await prisma.user.update({
+                            await prisma_1.prisma.user.update({
                                 where: { id: clerkUserId },
                                 data: {
                                     credits: { increment: creditAmount }
@@ -88,5 +89,5 @@ const clerkwebhooks = async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
 };
-export default clerkwebhooks;
+exports.default = clerkwebhooks;
 //# sourceMappingURL=clerk.js.map

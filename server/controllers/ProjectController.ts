@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import * as Sentry from '@sentry/node';
-import { prisma } from "../configs/prisma.js";
+import { prisma } from "../configs/prisma";
 import { v2 as cloudinary } from 'cloudinary';
 import { GenerateContentConfig, HarmBlockThreshold, HarmCategory } from "@google/genai";
-import ai from "../configs/ai.js";
+import ai from "../configs/ai";
 import axios from 'axios';
 import fs from "fs";
 import path from "path";

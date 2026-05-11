@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as Sentry from '@sentry/node';
-import { prisma } from "../configs/prisma.js";
+import { prisma } from "../configs/prisma";
 
 //get user credits
 export const getUserCredits = async (req:Request,res:Response) =>{
