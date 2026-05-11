@@ -20,15 +20,15 @@ const Result = () => {
   const fetchProjectData = async ()=>{
     try {
       const token = await getToken()
-      const {data}  = await api.get(`api/user/project/${projectId}`,{
-        headers:{Authorization:`Bearer${token}`}
+      const {data}  = await api.get(`/api/user/projects/${projectId}`,{
+        headers:{Authorization:`Bearer ${token}`}
       })
       setProjectData(data.project);
       setIsGenerating(data.project.isGenerating);
       setLoading(false);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
-      toast.error(error?.response?.data?.messgae || error.message);
+      toast.error(error?.response?.data?.message || error.message);
       console.log(error);
     }
   }
@@ -48,7 +48,7 @@ const Result = () => {
     setIsGenerating(false);
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
    } catch (error:any) {
-      toast.error(error?.response?.data?.messgae || error.message);
+      toast.error(error?.response?.data?.message || error.message);
       console.log(error);
    }
   }
@@ -72,7 +72,7 @@ const Result = () => {
   }, [user, isGenerating])
   return Loading?(
     <div className="h-screen w-full flex items-center justify-center">
-      <Loader2Icon className="animate-spin text-indigo-size-9"/>
+      <Loader2Icon className="animate-spin text-indigo-500 size-9"/>
     </div>
   ):(
     <div className="min-h-screen text-white p-6 md:p-12 mt-20">
@@ -109,13 +109,13 @@ const Result = () => {
                     <a href={project.generatedImage} download>
                       <GhostButton className="w-full rounded-md py-3 disabled:opacity-50 disabled:cursor-not-allowed">
                         <ImageIcon className="size-4.5"/>
-                        Download video
+                        Download Image
                       </GhostButton>
                     </a>
                     <a href={project.generatedVideo} download>
                       <GhostButton disabled={!project.generatedVideo}className="w-full rounded-md py-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <ImageIcon className="size-4.5"/>
-                        Download Image
+                        <VideoIcon className="size-4.5"/>
+                        Download Video
                       </GhostButton>
                     </a>
                   </div>
@@ -138,7 +138,7 @@ const Result = () => {
                     {/* <SparkleIcon className="size-4"/>Generate Video */}
                   </PrimaryButton>
                 ):(
-                  <div className="p-3 bg-green-500/10 border boder-green-500/20 rounded-xl text-green-400 text-center text-sm font-medium">
+                  <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-center text-sm font-medium">
                     Video Generated successfully!
                   </div>
                 )}

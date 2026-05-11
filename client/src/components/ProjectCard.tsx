@@ -53,15 +53,15 @@ const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project ,
         {/* {preview} */}
         <div className={`${gen.aspectRatio==='9:16' ? 'aspect-9/16' : 'aspect-video'} relative overflow-hidden`}>
           {gen.generatedImage && (
-            <img src={gen.generatedImage} alt={gen.productName} className={`absolute insert-0 w-full h-full object-cover transition duration-500 ${gen.generatedVideo?'group-hover:opacity-0':'group-hover:scale-105'}`}/>
+            <img src={gen.generatedImage} alt={gen.productName} className={`absolute inset-0 w-full h-full object-cover transition duration-500 ${gen.generatedVideo?'group-hover:opacity-0':'group-hover:scale-105'}`}/>
           )}
           {gen.generatedVideo && (
-            <video src={gen.generatedVideo} muted loop playsInline className="absolute insert-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition duration-500" 
+            <video src={gen.generatedVideo} muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition duration-500" 
             onMouseEnter={(e)=>e.currentTarget.play()}
             onMouseLeave={(e)=>e.currentTarget.pause()}/>
           )}
           {(!gen.generatedImage && !gen?.generatedVideo) && (
-            <div className="absolute insert-0 w-full h-full flex flex-col items-center justify-center bg-black/20">
+            <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-black/20">
               <Loader2Icon className="size-7 animate-spin"/>
             </div>
           )}
@@ -79,7 +79,7 @@ const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project ,
             <div 
             onMouseDownCapture={()=>setMenuOpen(true)}
             onMouseLeave={()=>setMenuOpen(false)}
-            className="absolute right-3 top-3 sm:opacity-0 group-hover:opacity-100 transition flex items-center gap+2">
+            className="absolute right-3 top-3 sm:opacity-0 group-hover:opacity-100 transition flex items-center gap-2">
               <div className="absolute top-3 right-3">
                 <EllipsisIcon className="ml-auto bg-black/10 rounded-full p-1 size-7"></EllipsisIcon>
               </div>
@@ -144,7 +144,7 @@ const ProjectCard = ({gen , setGeneration , forCommunity = false}:{gen:Project ,
             <GhostButton className="text-xs justify-center" onClick={()=>{navigate(`/result/${gen.id}`); scrollTo(0,0)}}>
               View Details
             </GhostButton>
-            <PrimaryButton className="rounde-md" onClick={()=>Togglepublish(gen.id)} >
+            <PrimaryButton className="rounded-md" onClick={()=>Togglepublish(gen.id)} >
               {gen.isPublished?'Unpublish':'Publish'}
             </PrimaryButton>
           </div>

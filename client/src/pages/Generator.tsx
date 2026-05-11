@@ -44,8 +44,8 @@ const Generator = () => {
           formdata.append('images',modelImage);
 
           const token = await getToken()
-          const {data} = await api.post('api/project/create',formdata,{
-            headers:{Authorization:`Bearer${token}`}
+          const {data} = await api.post('/api/project/create',formdata,{
+            headers:{Authorization:`Bearer ${token}`}
           })
           toast.success(data.message)
           navigate('/result/'+data.projectId)
@@ -72,11 +72,11 @@ const Generator = () => {
             <div className="mb-4 text-gray-300">
               <div>
                 <label htmlFor="name" className="block text-sm mb-4" >Project Name</label>
-                <input type="text" id="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Name your project"  required className="w-full bg-white/3 rouded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
+                <input type="text" id="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Name your project"  required className="w-full bg-white/3 rounded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
               </div>
               <div className="mb-4 text-gray-300">
                 <label htmlFor="roductname" className="block text-sm mb-4" >Product Name</label>
-                <input type="text" id="productname" value={productName} onChange={(e)=>setProductName(e.target.value)} placeholder="Name the name of your product"  required className="w-full bg-white/3 rouded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
+                <input type="text" id="productname" value={productName} onChange={(e)=>setProductName(e.target.value)} placeholder="Name the name of your product"  required className="w-full bg-white/3 rounded-lg border-2 p-4 text-sm border-violet-200/10 focus:border-violet-500/50 outline-none transition-all"/>
               </div>
               <div className="mb-4 text-gray-300">
                 <label htmlFor="productDescription" className="block text-sm mb-4" >Product Description 

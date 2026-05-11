@@ -74,8 +74,8 @@ export const faqData = [
         answer: 'Yes - you can cancel from your dashboard. You will retain access through the end of your billing period'
     },
     {
-        question: 'Do I won the generated images?',
-        answer: 'Yes - you receive full comercial rights to any images and videos generated on the platforms. Use them for ads, ecommerce, Social media and more.'
+        question: 'Do I own the generated images?',
+        answer: 'Yes - you receive full commercial rights to any images and videos generated on the platforms. Use them for ads, ecommerce, Social media and more.'
     },
     {
         question: 'What input formats do you support?',

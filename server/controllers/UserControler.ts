@@ -43,7 +43,7 @@ export const getProjectById = async (req:Request,res:Response) =>{
       where:{id:projectId.toString(),userId}
     })
 
-    if(!project){return res.status(401).json({msg:'Project not found'})}
+    if(!project){return res.status(404).json({msg:'Project not found'})}
     res.json({project})
   } catch (error:any) {
     Sentry.captureException(error);
@@ -60,7 +60,7 @@ export const toggleProjectPublic = async (req:Request,res:Response) =>{
       where:{id:projectId.toString(), userId}
     })
 
-    if(!project){return res.status(401).json({msg:'Project not found'})}
+    if(!project){return res.status(404).json({msg:'Project not found'})}
 
     if(!project?.generatedImage && !project?.generatedVideo){
       return res.status(404).json({msg:'image or video not generated'})

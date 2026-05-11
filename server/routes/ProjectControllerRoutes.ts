@@ -7,8 +7,8 @@ const ProjectRouter = express.Router();
 
 ProjectRouter.post('/create', upload.array('images',2) ,protect,CreateProject);
 ProjectRouter.post('/video',protect,CreateVideo);
-ProjectRouter.post('/publisheb',protect,getAllPublished);
-ProjectRouter.post('/:projectId',protect,DeleteProject);
+ProjectRouter.get('/published',getAllPublished);
+ProjectRouter.delete('/:projectId',protect,DeleteProject);
 
 export default ProjectRouter;
 
